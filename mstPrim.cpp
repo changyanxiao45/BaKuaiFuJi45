@@ -1,4 +1,9 @@
+/*Minimum spanning tree*/
 /*最小生成树*/
+/*
+ * author: Yanxiao Chang
+ * date:   20150717
+*/
 #include <iostream>
 using namespace std;
 
