@@ -94,7 +94,7 @@ void Kruskal(struct Graph * graph)
   for(int i = 0; i < e; ++i){
    cout<<result[i].u<<','<<result[i].v<<','<<result[i].w<<endl;
   }
-
+}
 void examFunc()
 {
   struct Graph * graph;
