@@ -1,5 +1,4 @@
-/*最小生成树*/
-#define USE_CXX 1
+/*Minimum Spanning Tree*/
 
 #include <iostream>
 #include <cstring>
@@ -113,3 +112,13 @@ int main()
   }
   return 0;
 }
+
+/*
+1
+4 5
+0 1 10
+0 2 6
+0 3 5
+1 3 15
+2 3 4
+*/
