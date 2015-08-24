@@ -1,7 +1,6 @@
 /*最小生成树*/
 #define USE_CXX 1
 
-#ifdef USE_CXX
 #include <iostream>
 #include <cstring>
 using namespace std;
@@ -11,46 +10,97 @@ struct Edge
   int u,v,w;
   void set(int a, int b, int c) {u = a; v = b; w = c;}
 };
+
 struct Graph
 {
   int V, E;
   struct Edge *edge;
 };
+
 struct Subset
 {
   int parent;
   int rank;
 };
 
-#else
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-typedef struct Edge
+int find(struct Subset subsets[], int index)
 {
-  int u, v, w;
-};
-typedef struct Graph
+  if(subsets[index].parent != index)
+    subsets[index].parent = find(subsets, subsets[index].parent);
+  return subsets[index].parent;
+}
+
+int myComp(const void *a, const void *b)
 {
-  int V, E;
-  typedef struct Edge *edge;
-};
-typedef struct Subset
+  struct Edge *ea = (struct Edge *)a;
+  struct Edge *eb = (struct Edge *)b;
+  return ea->w - eb->w;
+}
+
+void Union(struct Subset subsets[], int x, int y)
 {
-  int parent;
-  int rank;
-};
-#endif
+  int xroot = find(subsets,x);
+  int yroot = find(subsets,y);
+  
+  if(subsets[xroot].rank < subsets[yroot].rank){
+    subsets[xroot].parent = yroot;
+  }
+  else if(subsets[xroot].rank > subsets[yroot].rank){
+    subsets[yroot].parent = xroot;
+  }
+  else{
+    subsets[yroot].parent = xroot;
+    subsets[xroot].rank++;
+  }
+}
 
+struct Graph * CreateGraph(struct Graph * graph)
+{
+  int V,E;
+  cin>>V>>E;
+  struct Graph* graph = (struct Graph*)malloc(sizeof(struct Graph));
+  graph->V = v;
+  graph->E = E;
+  graph->edge = (struct Edge*)malloc(graph->E * (struct Edge));
+  
+  int u,v,w;
+  for(int e = 1; e <= E; ++e){
+    cin>>u>>v>>w;
+    graph->edge[e].set(u,v,w);
+  }
+  return graph;
+}
 
-
-
+void Kruskal(struct Graph * graph)
+{
+  int e = 0;
+  int i = 0;
+  struct Graph * result = (struct Graph *)malloc(graph->E * sizeof(struct Graph));
+  qsort();
+  struct Subset * subsets = (struct Subset *)malloc(graph->V * sizeof(struct Subset));
+  for(int v = 1; v <= V; ++v){
+    subsets[v].parent = v;
+    subsets[v].rank = 0;
+  }
+  while(e < graph->V-1){
+    struct Edge next = graph->edge[i++];
+    int x = find();
+    int y = find();
+    if(x!=y){
+      result[e++] = next;
+      Union(subsets,x,y);
+    }
+  }  
+  
+  for(int i = 0; i < e; ++i){
+   cout<<result[i].u<<','<<result[i].v<<','<<result[i].w<<endl;
+  }
 
 void examFunc()
 {
-  
+  struct Graph * graph;
+  CreateGraph(graph);
+  Kruskal(graph);
 }
 
 int main()
